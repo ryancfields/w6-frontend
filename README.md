@@ -37,7 +37,7 @@ By the end of this lesson. You should be able to set up two separate servers tha
 * **Question:** What error do you get? Why?
 
 * **Your Answer:** 
-
+CORS error - cross site origin which is saying I can't access other resources unless explicitialy allowed to.
 ---
 
 - [ ] To get around this issue, we need to explicitly allow for requests to come from `localhost:3000`. To do so, we will use the [cors](https://www.npmjs.com/package/cors) package. Install `cors` on the _backend server_ and whitelist `localhost:5000`.
@@ -45,10 +45,13 @@ By the end of this lesson. You should be able to set up two separate servers tha
 * **Question:** Try your request again. What error do you get? Why?
 
 * **Your Answer:**
-
+401 Unauthorized from the auth.js middleware since I do not have token.
 ---
 
 - [ ] In `App.js`, we have created our `loginUser()` method. Try invoking that function through the frontend, inspecting what is outputted.
+
+
+Logging In User: {username: "Ryan", password: "Password"}
 
 ---
 
@@ -64,11 +67,15 @@ By the end of this lesson. You should be able to set up two separate servers tha
   ```
 
 * **Question:** Why do we need to include the "Content-Type" in the headers?
-
+To tell the server what content to expect and parse.
 * **Your Answer:**
 
 * **Question:** How could you convert this method to an `async` method?
+ async loginUser (user) {
+    
+    const response = await fetch(
 
+  const json = await response.json()
 ---
 
 - [ ] Let's move our requests to a better place. Create a new file at `./src/api/auth.js`. Add the following inside of it:
@@ -97,6 +104,8 @@ By the end of this lesson. You should be able to set up two separate servers tha
 * **Question:** What is happening on the first couple of lines of the new file you've created?
 
 * **Your Answer:** 
+Setting parameters when we deploy, one as a default to run during testing?  Then the ability 
+to specify another value.
 
 ---
 
@@ -113,28 +122,40 @@ By the end of this lesson. You should be able to set up two separate servers tha
 * **Question:** Where did you write your code to manipulate LocalStorage? Why?
 
 * **Your Answer:** 
-
+Inside auth.js, but we could have placed in the React/Frontend side too.
 ---
 
 - [ ] Now that we have the user's information, let's store the user's ID in state. Set `currentUserId` to the user ID you've retrieved.
+
+
 
 * **Question:** What changes on the page after you successfully login? Why?
 
 * **Your Answer:**
 
+We now see create a new post
+
 * **Question:** What happens if you enter in the incorrect information? What _should_ happen?
 
 * **Your Answer:**
 
+Crashes with an unhandedled Rejection.  It should handle a in a graceful manner.
 ---
 
 - [ ] Try refreshing the page. You'll notice it _looks_ like you've been logged out, although your token is still stored in LocalStorage. To solve this, we will need to plug in to the component life cycle with `componentDidMount()`. Try adding the following code to `App.js`:
   ```js
   async componentDidMount () {
+    //Check to see if a local token is present.
     const token = window.localStorage.getItem('journal-app')
+
+    // If there is a local token, call auth profile and get the current user _id.
+
     if (token) {
       const profile = await auth.profile()
-      this.setState({ currentUserId: profile.user._id })
+      try {
+        //Finaly set the state of the current user ID to the one that is retrived by the token:
+        this.setState({ currentUserId: profile.user._id })
+      } catch (e) { }
     }
   }
   ```
@@ -142,6 +163,8 @@ By the end of this lesson. You should be able to set up two separate servers tha
 * **Question:** Describe what is happening in the code above.
 
 * **Your Answer:**
+
+Added above.
 
 ---
 
@@ -151,6 +174,7 @@ By the end of this lesson. You should be able to set up two separate servers tha
 
 * **Your Answer:**
 
+We still have the token, which means we are not logged out if we have a token.
 ---
 
 - [ ] Update the `logout()` method to appropriately logout the user.
@@ -158,8 +182,14 @@ By the end of this lesson. You should be able to set up two separate servers tha
 * **Question:** What did you have to do to get the `logout()` function to work? Why?
 
 * **Your Answer:**
-
+Remove the token from the local storage side
+Reset the User ID to null.
 ---
+
+
+
+!!---------!!
+
 
 - [ ] Following the patterns we used above, build the Signup feature.
 

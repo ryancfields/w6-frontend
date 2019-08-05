@@ -5,11 +5,13 @@ import Navigation from './shared/Navigation/Navigation'
 import Login from './auth/Login.Form'
 import Signup from './auth/Signup.Form'
 import UsersContainer from './users/Container'
+import * as auth from '../api/auth.js'
 
 class App extends React.Component {
   constructor () {
     super()
     this.state = {
+
       currentUserId: null
     }
 
@@ -17,8 +19,27 @@ class App extends React.Component {
     this.signupUser = this.signupUser.bind(this)
   }
 
-  loginUser (user) {
-    console.log('Logging In User:', user)
+  async componentDidMount () {
+    //Check to see if a local token is present.
+    const token = window.localStorage.getItem('journal-app')
+
+    // If there is a local token, call auth profile and get the current user _id.
+
+    if (token) {
+      const profile = await auth.profile()
+      try {
+        //Finaly set the state of the current user ID to the one that is retrived by the token:
+        this.setState({ currentUserId: profile.user._id })
+      } catch (e) { }
+    }
+  }
+
+  async loginUser (user) {
+    
+    await auth.login(user)
+    const profile = await auth.profile()
+
+    this.setState({ currentUserId: profile.user._id })
   }
 
   signupUser (user) {
