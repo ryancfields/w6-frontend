@@ -2,12 +2,16 @@ import React from 'react'
 import { withRouter } from 'react-router'
 import { Link } from 'react-router-dom'
  
-const AuthenticatedLinks = ({ currentUserId, history }) => {
+const AuthenticatedLinks = ({ currentUserId, logoutUser, signupUser, history }) => {
   const logout = () => {
-    window.localStorage.removeItem('journal-app')
-    history.push('/login')
-  
+    logoutUser()
   }
+  const sigunp = () => {
+    signupUser()
+  }
+
+
+  
   return (
     <ul className='nav justify-content-end'>
       <li className='nav-item'>

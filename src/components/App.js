@@ -11,8 +11,7 @@ class App extends React.Component {
   constructor () {
     super()
     this.state = {
-
-      currentUserId: null
+      currentUserId: null 
     }
 
     this.loginUser = this.loginUser.bind(this)
@@ -42,15 +41,24 @@ class App extends React.Component {
     this.setState({ currentUserId: profile.user._id })
   }
 
-  signupUser (user) {
-    console.log('Signing Up User:', user)
+  async signupUser (user) {
+    console.log('signing up user')
+    await auth.signup(user)
+  }
+  
+  logoutUser = () => {
+    window.localStorage.removeItem('journal-app')
+    this.setState({ currentUserId: null })  
   }
 
   render () {
     return (
       <Router>
         <Header />
-        <Navigation currentUserId={this.state.currentUserId} />
+        <Navigation 
+        currentUserId={this.state.currentUserId} 
+        logoutUser={this.logoutUser}
+        />
         <Switch>
           <Route path='/login' exact component={() => {
             return <Login onSubmit={this.loginUser} />

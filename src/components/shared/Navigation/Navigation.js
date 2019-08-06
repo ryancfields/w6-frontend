@@ -8,9 +8,14 @@ export default ({ currentUserId, logoutUser }) => (
     <div className='container'>
       { 
         currentUserId 
-        ? <AuthenticatedLinks currentUserId={currentUserId} /> 
-        : <UnauthenticatedLinks /> 
-      }
+        ? ( 
+        <AuthenticatedLinks 
+          currentUserId={currentUserId}
+          logoutUser={logoutUser}
+        />
+        )
+      : <UnauthenticatedLinks />
+    }
     </div>
   </section>
 )
