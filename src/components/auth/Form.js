@@ -1,7 +1,5 @@
 import React from 'react'
-import {
-  withRouter
-} from 'react-router'
+import { withRouter } from 'react-router'
 
 class Form extends React.Component {
   constructor (props) {
@@ -17,7 +15,6 @@ class Form extends React.Component {
 
   handleChange ({ target: { name, value } }) {
     this.setState({ [name]: value })
-    this.props.history.push('/users')
   }
 
   handleSubmit (e) {
@@ -55,4 +52,4 @@ class Form extends React.Component {
   }
 }
 
-export default withRouter(Form) 
+export default withRouter(Form)

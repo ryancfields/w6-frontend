@@ -11,7 +11,8 @@ class App extends React.Component {
   constructor () {
     super()
     this.state = {
-      currentUserId: null 
+      currentUserId: null,
+      loading: true
     }
 
     this.loginUser = this.loginUser.bind(this)
@@ -28,7 +29,7 @@ class App extends React.Component {
       const profile = await auth.profile()
       try {
         //Finaly set the state of the current user ID to the one that is retrived by the token:
-        this.setState({ currentUserId: profile.user._id })
+        this.setState({ currentUserId: profile.user._id})
       } catch (e) { }
     }
   }
