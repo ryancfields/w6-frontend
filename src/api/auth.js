@@ -20,7 +20,7 @@ const { NODE_ENV } = process.env
   }
 
   export const signup = async (user) => {
-    const response = await fetch(`${BASE_URL}/api/login`, {
+    const response = await fetch(`${BASE_URL}/api/signup`, {
       body: JSON.stringify(user),
       headers: {
         'Content-Type': 'application/json'
@@ -28,12 +28,12 @@ const { NODE_ENV } = process.env
       method: 'POST'
     })
     const json = await response.json()
-    
     const token = json.token
+  
     window.localStorage.setItem('journal-app', token)
-
     return json
-  }
+  }  
+  
 
 
 

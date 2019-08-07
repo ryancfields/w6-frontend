@@ -42,8 +42,10 @@ class App extends React.Component {
   }
 
   async signupUser (user) {
-    console.log('signing up user')
     await auth.signup(user)
+    const profile = await auth.profile()
+
+    this.setState({ currentUserId: profile.user._id })
   }
   
   logoutUser = () => {
@@ -67,7 +69,9 @@ class App extends React.Component {
             return <Signup onSubmit={this.signupUser} />
           }} />
 
-          <Route path='/users' component={UsersContainer} />
+          <Route path='/users' render={() => {
+            return this.state.currentUserId ? <UsersContainer /> : <Redirect to='/login' />
+          }} />
 
           <Redirect to='/login' />
         </Switch>

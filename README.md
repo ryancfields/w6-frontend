@@ -115,6 +115,7 @@ to specify another value.
 
 * **Your Answer:**
 
+We are storing the token to give a state to the app - since the app is stateless this allows us to know information about the user without requiring it to authenticate each time.
 ---
 
 - [ ] We now have the token, but we don't have any of the user information. Add a new function to our `./src/api/auth.js` called `profile()` that sends over the token in order to retrieve the user information. Then, log that information.
@@ -188,7 +189,7 @@ Reset the User ID to null.
 
 
 
-!!---------!!
+
 
 
 - [ ] Following the patterns we used above, build the Signup feature.
@@ -204,7 +205,7 @@ Reset the User ID to null.
 * **Question:** What happens? What _should_ happen?
 
 * **Answer:**
-
+This is the users route, and we should redirect to this route.
 ---
 
 - [ ] Try _replacing_ the `/users` Route in `App.js` with the following:
@@ -217,7 +218,7 @@ Reset the User ID to null.
 * **Question:** Describe what is happening in the code above.
 
 * **Your Answer:**
-
+Checking to see if there is a current userID, if no it redirects to login.  Else goes to users route.
 ---
 
 - [ ] Now try logging in. Then, when you're on the `/users` page, refresh the page.
