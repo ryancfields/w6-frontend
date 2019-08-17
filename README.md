@@ -226,6 +226,7 @@ Checking to see if there is a current userID, if no it redirects to login.  Else
 * **Question:** What happens and why?
 
 * **Your Answer:**
+There is a bit of a lag on the refresh of the page.
 
 ---
 
@@ -234,7 +235,7 @@ Checking to see if there is a current userID, if no it redirects to login.  Else
 * **Question:** What did you do to solve this problem?
 
 * **Your Answer:**
-
+Only refresh the page if needed.
 ---
 
 - [ ] We will have the same problem on the `/users/<userId>/posts` page. Use the same strategy to have this page load correctly on refresh.
@@ -242,7 +243,7 @@ Checking to see if there is a current userID, if no it redirects to login.  Else
 * **Question:** In what component did you add the `loading` property and why?
 
 * **Your Answer:**
-
+loading: true / false
 ---
 
 - [ ] Using the same principals as above, make it so that if the user is logged in, they cannot go to the `/login` or `/signup` routes. Instead, forward them to `/users`.
@@ -271,10 +272,12 @@ Checking to see if there is a current userID, if no it redirects to login.  Else
 
 * **Question:** Why did the number of posts not change when you were redirected back to the `/users` route?
 
+There isn't anything that is calling the backend API to delete anything.
+
 * **Your Answer:** Whenever we modify our data with a Create, Update, or Delete, we have a few options on how to make our frontend reflect those changes. What options can you think of?
 
 * **Question:**
-
+We should be refreshing on the fronend each time.
 ---
 
 - [ ] Using your preferred method, update your code so that the frontend will reflect the changes made to the backend.
