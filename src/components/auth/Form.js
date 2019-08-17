@@ -1,11 +1,13 @@
 import React from 'react'
+import { withRouter } from 'react-router'
 
-export default class Form extends React.Component {
+class Form extends React.Component {
   constructor (props) {
     super(props)
-    const { post = {} } = this.props
-    const { content = '', emotion = '' } = post
-    this.state = { content, emotion }
+    this.state = {
+      username: '',
+      password: ''
+    }
 
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -18,33 +20,36 @@ export default class Form extends React.Component {
   handleSubmit (e) {
     e.preventDefault()
     this.props.onSubmit(this.state)
+      .then(() => this.props.history.push('/users'))
   }
 
   render () {
     return (
       <form onSubmit={this.handleSubmit}>
         <div className='form-group'>
-          <label htmlFor='emotion'>Emotion</label>
+          <label htmlFor='username'>Username</label>
           <input
             className='form-control'
-            id='emotion'
+            id='username'
             onChange={this.handleChange}
-            name='emotion'
+            name='username'
             type='text'
-            value={this.state.emotion} />
+            value={this.state.username} />
         </div>
         <div className='form-group'>
-          <label htmlFor='content'>Content</label>
-          <textarea
+          <label htmlFor='password'>Password</label>
+          <input
             className='form-control'
-            id='content'
+            id='password'
             onChange={this.handleChange}
-            name='content'
-            type='text'
-            value={this.state.content} />
+            name='password'
+            type='password'
+            value={this.state.password} />
         </div>
         <button type='submit' className='btn btn-primary'>Submit</button>
       </form>
     )
   }
 }
+
+export default withRouter(Form)
